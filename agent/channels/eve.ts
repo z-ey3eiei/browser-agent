@@ -1,15 +1,19 @@
 import { eveChannel } from "eve/channels/eve";
-import { localDev, placeholderAuth, vercelOidc } from "eve/channels/auth";
+import { type AuthFn, vercelOidc } from "eve/channels/auth";
+import { sessionFromRequest } from "../lib/private-auth";
+
+const ownerSession: AuthFn<Request> = async (request) => {
+  if (!sessionFromRequest(request)) return null;
+  return {
+    authenticator: "private-owner",
+    principalId: "owner",
+    principalType: "user",
+    attributes: {},
+  };
+};
 
 export default eveChannel({
-  auth: [
-    // Open on localhost for `eve dev` and the REPL; ignored in production.
-    localDev(),
-    // Lets the eve TUI and your Vercel deployments reach the deployed agent.
-    vercelOidc(),
-    // This placeholder will not allow browser requests in production.
-    // Replace it with your app's auth provider, like Auth.js or Clerk,
-    // or use none() for a public demo.
-    placeholderAuth(),
-  ],
+  // Protect session creation, follow-ups, and streaming, not just the chat page.
+  // Keep Vercel OIDC for trusted internal framework calls; never accept anonymous traffic.
+  auth: [ownerSession, vercelOidc()],
 });
