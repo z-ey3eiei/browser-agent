@@ -28,7 +28,7 @@
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
-    "eve": "^0.11.4",
+    "eve": "^0.18.2",
     "lucide-react": "1.16.0",
     "motion": "12.40.0",
     "nanoid": "5.1.16",
@@ -48,7 +48,8 @@
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
     "@typescript/native-preview": "7.0.0-dev.20260523.1",
-    "microsandbox": "^0.5.7"
+    "microsandbox": "^0.5.7",
+    "typescript": "7.0.2"
   },
   "overrides": {
     "ai": "7.0.0-beta.178"
